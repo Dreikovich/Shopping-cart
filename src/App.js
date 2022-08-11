@@ -1,90 +1,31 @@
 import './App.css';
 import 'macro-css';
-
+import Card from './components/Card'
+import Header from './components/Header';
+import Drawer from './components/Drawer'
 
 function App() {
   return (
     <div className="App">
-      <header className="p-40">
-        <div className="headerLeft">
-          <img width={64} height={64} src ="image\icons8-grocery-store-96.png"></img>
-          <div className="headerLeftInfo">
-            <h3>React T-shirt</h3>
-            <p>T-shirt online store</p>
+      <Drawer />
+      
+
+
+
+      <Header />
+      <div className="content p-30">
+        <div className="d-flex justify-between align-center">
+          <h1>All T-shirts</h1>
+          <div className="search-block d-flex">
+            <img width={22} height={22} src="image/icons8-search-30.png" alt="Search"></img>
+            <input placeholder="Seach" type="search"></input>
+
           </div>
         </div>
         
-        <ul className="headerRight">
-          <li>
-            <img width={20} height={20}src='image/shopping-cart.png'>
-            </img>
-            <span>1000$</span>
-          </li>
-          <li>
-            <img src ="image/user.png" width={20} height={20}>
-            </img>
-          </li>
-        </ul>
-      </header>
-      <div className="content p-40">
-        <h1>All T-shirts</h1>
         <div className="d-flex ">
-          <div className="card ">
-              <img width={156} height={156}src="image/Lovepik_com-450079562-Be Creative T-shirt Design - Creative T-shirt Design - Motivatio.png"></img>
-              <h5>Regular-fit t-shirt for men</h5>
-              <div className="d-flex justify-between align-center">
-                <div className="cost d-flex flex-column ">
-                  <span>Price:</span>
-                  <b>10$</b>
-                </div>
-                <button>
-                  <img width={20} height={20} src="image/plus.png">
-                  </img>
-                </button>
-              </div>
-          </div>
-          <div className="card">
-              <img width={156} height={156}src="image/kisspng-printed-t-shirt-polo-shirt-clothing-red-t-shirt-5b25be5dd3d570.0055060815292002218677.png"></img>
-              <h5>Regular-fit t-shirt for men</h5>
-              <div className="d-flex justify-between align-center">
-                <div className="cost d-flex flex-column ">
-                  <span>Price:</span>
-                  <b>10$</b>
-                </div>
-                <button>
-                  <img width={20} height={20} src="image/plus.png">
-                  </img>
-                </button>
-              </div>
-          </div>
-          <div className="card">
-              <img width={156} height={156}src="image/Lovepik_com-450079562-Be Creative T-shirt Design - Creative T-shirt Design - Motivatio.png"></img>
-              <h5>Regular-fit t-shirt for men</h5>
-              <div className="d-flex justify-between align-center">
-                <div className="cost d-flex flex-column ">
-                  <span>Price:</span>
-                  <b>10$</b>
-                </div>
-                <button>
-                  <img width={20} height={20} src="image/plus.png">
-                  </img>
-                </button>
-              </div>
-          </div>
-          <div className="card">
-              <img width={156} height={156}src="image/Lovepik_com-450079562-Be Creative T-shirt Design - Creative T-shirt Design - Motivatio.png"></img>
-              <h5>Regular-fit t-shirt for men</h5>
-              <div className="d-flex justify-between align-center">
-                <div className="cost d-flex flex-column ">
-                  <span>Price:</span>
-                  <b>10$</b>
-                </div>
-                <button>
-                  <img width={20} height={20} src="image/plus.png">
-                  </img>
-                </button>
-              </div>
-          </div>
+          <Card></Card>
+          
         </div>
         
         
