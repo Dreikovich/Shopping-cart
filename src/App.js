@@ -1,6 +1,7 @@
 import './App.css';
 import 'macro-css';
 import React from 'react'
+import axios from 'axios'
 import {useState, useEffect} from 'react'
 import Card from './components/Card'
 import Header from './components/Header';
@@ -17,8 +18,6 @@ function App() {
     
   }
 
-  
-  
   const checkItemInCart = (obj)=>{
     console.log(obj)
     if(cartItems.length===0 ){
@@ -39,24 +38,36 @@ function App() {
   const onAddToCart = (obj)=>{
     console.log(cartItems)
     if(!checkItemInCart(obj)){
+      axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/cart", obj)
       setCartItems((prev)=>[...prev, obj])
     }
-    // setCartItems((prev)=>[...prev, obj])
-    
+    // setCartItems((prev)=>[...prev, obj]) 
   }
+
+  const onDeleteItem = (id)=>{
+    setCartItems(prev=>prev.filter(item=>item.id!==id))
+  }
+
   useEffect(()=>{
-    fetch("https://62f615b0612c13062b45e6f7.mockapi.io/items")
-    .then((res)=>{
-      return res.json()
-    }).
-    then((json)=>{
-      setItems(json)
+    // fetch("https://62f615b0612c13062b45e6f7.mockapi.io/items")
+    // .then((res)=>{
+    //   return res.json()
+    // }).
+    // then((json)=>{
+    //   setItems(json)
+    // })
+
+    axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/items").then((res)=>{
+      setItems(res.data)
+    })
+    axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/cart").then((res)=>{
+      setCartItems(res.data)
     })
   },[])
   
   return (
     <div className="App">
-      {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  /> :null}
+      {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  onDeleteItem={onDeleteItem}/> :null}
       
       <Header onOpenedCart={onOpenedCart}/>
       <div className="content p-30">

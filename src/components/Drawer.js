@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Drawer = ({onOpenedCart, cartItems=[]}) => {
+const Drawer = ({onOpenedCart, cartItems=[], onDeleteItem}) => {
     console.log(cartItems)
     
   return (
@@ -25,7 +25,7 @@ const Drawer = ({onOpenedCart, cartItems=[]}) => {
                             
                         </div>
                         <div className="d-flex align-center ml-20 " >
-                            <img className="removeBtn" width={22} height={22} src="image/icons8-remove-50.png"></img>
+                            <img onClick={()=>onDeleteItem(item.id)} className="removeBtn" width={22} height={22} src="image/icons8-remove-50.png"></img>
                         </div>
                     </div>
                 </div>
