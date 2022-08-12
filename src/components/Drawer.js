@@ -2,6 +2,7 @@ import React from 'react'
 
 const Drawer = ({onOpenedCart, cartItems=[]}) => {
     console.log(cartItems)
+    
   return (
     <div className="overlay">
         <div className="drawer d-flex flex-column">
@@ -23,7 +24,7 @@ const Drawer = ({onOpenedCart, cartItems=[]}) => {
                             </div>
                             
                         </div>
-                        <div className="d-flex align-center ml-20 ">
+                        <div className="d-flex align-center ml-20 " >
                             <img className="removeBtn" width={22} height={22} src="image/icons8-remove-50.png"></img>
                         </div>
                     </div>

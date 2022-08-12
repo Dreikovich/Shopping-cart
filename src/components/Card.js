@@ -9,7 +9,6 @@ const Card = ({items, onAddToCart}) => {
     const onChangePlus = () => {
         setChoosePlus(!choosePlus)
         const {description, image, price} = items;
-        console.log(description, image, price)
         onAddToCart({description, image, price})
         
         
@@ -19,9 +18,9 @@ const Card = ({items, onAddToCart}) => {
         setChooseFavorite(!chooseFavorite)
     }
 
-    useEffect(()=>{
-        console.log("Changing")
-    },[choosePlus, chooseFavorite])
+    // useEffect(()=>{
+    //     console.log("Changing")
+    // },[choosePlus, chooseFavorite])
     
     
   return (

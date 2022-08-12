@@ -15,14 +15,33 @@ function App() {
     setIsOpened(!isOpened)
     
   }
-  
-  const CheckItemInCard = (items, cartItems)=>{
-    
 
+  
+  
+  const checkItemInCart = (obj)=>{
+    console.log(obj)
+    if(cartItems.length===0 ){
+      return false
+    }
+    else if(cartItems){
+      let isExistInCart = false;
+      cartItems.forEach(item=>{
+        console.log(JSON.stringify(item) === JSON.stringify(obj))
+        if(JSON.stringify(item) === JSON.stringify(obj)){
+          isExistInCart =true
+        } 
+      })
+      return isExistInCart;
+    }
   }
 
   const onAddToCart = (obj)=>{
-    setCartItems((prev)=>[...prev, obj])
+    console.log(cartItems)
+    if(!checkItemInCart(obj)){
+      setCartItems((prev)=>[...prev, obj])
+    }
+    // setCartItems((prev)=>[...prev, obj])
+    
   }
   useEffect(()=>{
     fetch("https://62f615b0612c13062b45e6f7.mockapi.io/items")
@@ -30,15 +49,13 @@ function App() {
       return res.json()
     }).
     then((json)=>{
-      console.log(json)
       setItems(json)
     })
   },[])
   
-  console.log(items)
   return (
     <div className="App">
-      {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}/>:null}
+      {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  /> :null}
       
       <Header onOpenedCart={onOpenedCart}/>
       <div className="content p-30">
