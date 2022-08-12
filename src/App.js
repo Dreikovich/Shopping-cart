@@ -6,12 +6,17 @@ import {useState, useEffect} from 'react'
 import Card from './components/Card'
 import Header from './components/Header';
 import Drawer from './components/Drawer'
+import Home from './pages/Home'
+import { Routes, Route } from "react-router-dom";
+import AppContext from "./context"
+import Favorites from './pages/Favorites';
 
 function App() {
   const [isOpened, setIsOpened] = useState(false)
   const [items, setItems] = useState()
   const [cartItems, setCartItems] = useState([])
   const [searchValue, setSearchValue] = useState("")
+  const [favorites, setFavorites] = useState()
 
   const onOpenedCart = ()=>{
     setIsOpened(!isOpened)
@@ -19,34 +24,44 @@ function App() {
   }
 
   const checkItemInCart = (obj)=>{
-    console.log(obj)
     if(cartItems.length===0 ){
+      
       return false
     }
     else if(cartItems){
       let isExistInCart = false;
       cartItems.forEach(item=>{
-        console.log(JSON.stringify(item) === JSON.stringify(obj))
-        if(JSON.stringify(item) === JSON.stringify(obj)){
-          isExistInCart =true
+        const {description, image, price} = item
+        const object = {description, image, price}
+        // console.log(JSON.stringify(item) === JSON.stringify(obj)) // it is not workin cause of id from asios mock api
+        if(JSON.stringify(object) === JSON.stringify(obj)){
+          isExistInCart = true
         } 
       })
       return isExistInCart;
     }
   }
-
   const onAddToCart = (obj)=>{
-    console.log(cartItems)
-    if(!checkItemInCart(obj)){
+    
+    if(!checkItemInCart(obj) ){
       axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/cart", obj)
       setCartItems((prev)=>[...prev, obj])
     }
     // setCartItems((prev)=>[...prev, obj]) 
   }
 
+  const onAddToFavorites = (obj)=>{
+    axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/favorites", obj)
+    setFavorites((prev)=>[...prev, obj])
+  } 
+
   const onDeleteItem = (id)=>{
-    setCartItems(prev=>prev.filter(item=>item.id!==id))
+      axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/cart/${id}`)
+      setCartItems((prev)=>prev.filter(item=>item.id!==id))
+    
   }
+
+
 
   useEffect(()=>{
     // fetch("https://62f615b0612c13062b45e6f7.mockapi.io/items")
@@ -63,38 +78,27 @@ function App() {
     axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/cart").then((res)=>{
       setCartItems(res.data)
     })
+    axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/favorites").then(res=>{
+      setFavorites(res.data)
+    })
   },[])
   
   return (
-    <div className="App">
-      {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  onDeleteItem={onDeleteItem}/> :null}
-      
-      <Header onOpenedCart={onOpenedCart}/>
-      <div className="content p-30">
-        <div className="d-flex justify-between align-center">
-          <h1>{searchValue? `Result of search: ${searchValue}`:"All T-shirts"}</h1>
-          <div className="search-block d-flex">
+    <AppContext.Provider>
+      <div className="App">
+        {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  onDeleteItem={onDeleteItem}/> :null}
+        
+        <Header onOpenedCart={onOpenedCart}/>
+        <Routes>
+          <Route path="/" element={<Home items={items} searchValue={searchValue} setSearchValue={setSearchValue} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites}/>}>
             
-            <img width={22} height={22} src="image/icons8-search-30.png" alt="Search"></img>
-            <input onChange={(e)=>setSearchValue(e.target.value)} value={searchValue || "" } placeholder="Seach"></input>
-            {searchValue && <img className="clear cu-p" width={18} height={18} src="image/close.png" alt="Clear" onClick={()=>setSearchValue("")}></img>}
-
-          </div>
-        </div>
-        
-        <div className="d-flex flex-wrap">
-          {items && items.filter(item=>item.description.toLowerCase().includes(searchValue.toLowerCase())).map((item,index)=>(
-              <Card key={index} items={item} onAddToCart={(obj)=>onAddToCart(obj)}></Card>
-          )
-          )}
-          
-          
-        </div>
-        
+          </Route>
+          <Route path="/favorites" element={<Favorites favorites={favorites}/>}></Route>
+        </Routes>
         
       </div>
+    </AppContext.Provider>
     
-    </div>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect } from "react"
 
-const Card = ({items, onAddToCart}) => {
+const Card = ({items, onAddToCart, onAddToFavorites}) => {
     
     const [choosePlus, setChoosePlus] = useState(false)
     const [chooseFavorite, setChooseFavorite] = useState(false)
@@ -14,8 +14,9 @@ const Card = ({items, onAddToCart}) => {
         
     }
 
-    const onChangeFavorite = () => {
+    const onChangeFavorite = (obj) => {
         setChooseFavorite(!chooseFavorite)
+        onAddToFavorites(obj)
     }
 
     // useEffect(()=>{
@@ -25,9 +26,9 @@ const Card = ({items, onAddToCart}) => {
     
   return (
     <div className="card mb-30">
-        <div className="favorite" onClick={onChangeFavorite}>
+        <div className="favorite" onClick={()=>onChangeFavorite(items)}>
             {!chooseFavorite?<img width={22} height={22} src='image/heart-unliked.svg' alt="unliked heart"></img>:
-            <img width={22} height={22} src='image/heart-liked.svg' alt="liked heart"></img>}
+            <img  width={22} height={22} src='image/heart-liked.svg' alt="liked heart"></img>}
             
         </div>
       {/* <img width={22} height={22} src="image/heart-liked.svg" alt="unliked heart"></img> */}
@@ -42,7 +43,7 @@ const Card = ({items, onAddToCart}) => {
                 {choosePlus===false?<img width={20} height={20} src="image/plus.png" alt="plus"></img>:<img width={30} height={30} src="image/check.png" alt="check"></img>}
             </button>
         </div>
-  </div>
+    </div>
   )
 }
 
