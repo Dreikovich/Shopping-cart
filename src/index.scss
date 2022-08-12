@@ -60,6 +60,10 @@ header{
     position:absolute;
     cursor:pointer;
   }
+  button{
+    border: none;
+   
+  }
  
   
 }
@@ -96,7 +100,7 @@ button{
 
 .drawer{
   position:absolute;
-  width:330px;
+  width:360px;
   height:92%;
   right:0;
   background:#ffffff;
@@ -119,6 +123,7 @@ button{
 
 .cartItem{
   border: 1px solid #ede7e7;
+  width: 100%;
   border-radius: 10px;
   padding:10px;
   overflow:hidden;
