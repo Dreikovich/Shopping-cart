@@ -1,0 +1,31 @@
+.orderItems{
+    border : 1px solid #ede7e7;
+    width : 100%;
+    height: 100%;
+    margin-top:40px;
+    border-radius: 20px;
+}
+
+.orderItem{
+    border : 1px solid #ede7e7;
+    width:90%;
+    height:128px;
+    border-radius:10px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction:row;
+    // margin-top:20px;
+    margin-left:50px;
+    margin-right: 20px;
+    margin-top:30px;
+    margin-bottom:30px;
+    
+}
+
+.content{
+    display:flex;
+    justify-content: center;
+    width: calc(1/4*100% - 10px);
+    
+}

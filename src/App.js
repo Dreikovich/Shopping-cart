@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import { Routes, Route } from "react-router-dom";
 import AppContext from "./context"
 import Favorites from './pages/Favorites';
+import Checkout from './pages/Checkout';
 
 function App() {
   const [isOpened, setIsOpened] = useState(false)
@@ -157,6 +158,7 @@ function App() {
           <Route path="/favorites" element={<Favorites favorites={favorites} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites}
           onDeleteFavotiteItem={onDeleteFavotiteItem} items={items}
           />}></Route>
+          <Route path="/order" element={<Checkout />}></Route>
         </Routes>
         
       </div>

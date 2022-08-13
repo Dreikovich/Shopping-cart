@@ -1,6 +1,7 @@
 import React from 'react'
 import {useContext} from 'react'
 import AppContext from '../context'
+import {Link } from 'react-router-dom'
 const Drawer = ({onOpenedCart, cartItems=[], onDeleteItem}) => {
     
 
@@ -51,14 +52,17 @@ const Drawer = ({onOpenedCart, cartItems=[], onDeleteItem}) => {
                             <b>{totalPrice*0.1}$</b>
                         </li>
                     </ul>
-                    <button className="greenButton">Checkout</button>
+                    <Link to="/order">
+                        <button className="greenButton" onClick={onOpenedCart}>Checkout</button>
+                    </Link>
+                    
                 </div>
             </div>
             : 
-            <div className="emptyCart d-flex align-center flex-column">
+            <div className="emptyCart d-flex align-center flex-column justify-center">
                 <img width={128} height={128} src="image/emptyCart.png" alt="empty"></img>
                 <p>Your cart is empty, please return to store to order T-shirt</p>
-                <button className="returnButton">Return to the store</button>
+                <button className="returnButton" onClick={onOpenedCart}>Return to the store</button>
 
             </div>
             }
