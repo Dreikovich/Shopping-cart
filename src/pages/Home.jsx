@@ -1,16 +1,18 @@
 import React from 'react'
 import Card from '../components/Card'
+import AppContext from "../context"
 
 const Home = ({items,
     searchValue,
     onAddToCart,
     setSearchValue, onAddToFavorites, cartItems}) => {
 
+    
    
   return (
    
     <div className="content p-30">
-         {console.log(cartItems)}
+         {/* {console.log(cartItems)} */}
         <div className="d-flex justify-between align-center">
           <h1>{searchValue? `Result of search: ${searchValue}`:"All T-shirts"}</h1>
           <div className="search-block d-flex">
@@ -23,10 +25,10 @@ const Home = ({items,
         </div>
         
         <div className="d-flex flex-wrap">
-            {console.log()}
+            {/* {console.log()} */}
           {items && items.filter(item=>item.description.toLowerCase().includes(searchValue.toLowerCase())).map((item,index)=>(
               <Card key={index} onAddToCart={(obj)=>onAddToCart(obj)} onAddToFavorites={(obj)=>onAddToFavorites(obj)} {...item} 
-              isAdded={cartItems.some((obj)=>Number(obj.parentId)==Number(item.id))}></Card>
+              ></Card>
           ))}
         </div>
       </div>

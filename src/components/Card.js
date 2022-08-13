@@ -1,26 +1,30 @@
 import React from 'react'
 import {useState, useEffect } from "react"
+import AppContext from '../context'
 
-const Card = ({onAddToCart, onAddToFavorites, favorited=false, id, description, image, price, isAdded=false }) => {
+const Card = ({onAddToCart, onAddToFavorites, favorited=false, id, description, image, price, isAdded=false, onDeleteFavotiteItem }) => {
     
     
     const [choosePlus, setChoosePlus] = useState(isAdded)
     const [chooseFavorite, setChooseFavorite] = useState(favorited)
+    const {isItemAdded, isItemFavorited} = React.useContext(AppContext)
+    
 
     const onChangePlus = () => {
-        console.log(id)
-        console.log(isAdded)
         setChoosePlus(!choosePlus)
-        if(!isAdded)
-        {
-            onAddToCart({id, parentId:id, description, image, price})
-        }
+        onAddToCart({id, parentId:id, description, image, price})
+        
         
     }
 
     const onChangeFavorite = (obj) => {
         setChooseFavorite(!chooseFavorite)
-        onAddToFavorites(obj)
+
+        const {id,parentId, description, image, price} = obj
+        onAddToFavorites({id, parentId:id, description, image, price})
+            
+
+       
     }
 
     // useEffect(()=>{
@@ -31,7 +35,7 @@ const Card = ({onAddToCart, onAddToFavorites, favorited=false, id, description, 
   return (
     <div className="card mb-30">
         <div className="favorite" onClick={()=>onChangeFavorite({id, description, image, price})}>
-            {!chooseFavorite?<img width={22} height={22} src='image/heart-unliked.svg' alt="unliked heart"></img>:
+            {!isItemFavorited(description)?<img width={22} height={22} src='image/heart-unliked.svg' alt="unliked heart"></img>:
             <img  width={22} height={22} src='image/heart-liked.svg' alt="liked heart"></img>}
             
         </div>
@@ -44,7 +48,7 @@ const Card = ({onAddToCart, onAddToFavorites, favorited=false, id, description, 
                 <b>{price}$</b>
             </div>
             <button onClick={onChangePlus}>
-                {choosePlus===false?<img width={20} height={20} src="image/plus.png" alt="plus"></img>:<img width={30} height={30} src="image/check.png" alt="check"></img>}
+                {!isItemAdded(id)?<img width={20} height={20} src="image/plus.png" alt="plus"></img>:<img width={30} height={30} src="image/check.png" alt="check"></img>}
             </button>
         </div>
     </div>
