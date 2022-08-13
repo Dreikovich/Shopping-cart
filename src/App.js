@@ -98,8 +98,8 @@ function App() {
     setFavorites((prev)=>prev.filter(item=>item.id!==id))
   }
 
-  const isItemAdded = (id) =>{
-    return cartItems.some((item)=>Number(item.parentId)===Number(id))
+  const isItemAdded = (description) =>{
+    return cartItems.some((item)=>item.description===description)
   }
 
   const isItemFavorited = (description) =>{

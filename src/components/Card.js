@@ -48,7 +48,7 @@ const Card = ({onAddToCart, onAddToFavorites, favorited=false, id, description, 
                 <b>{price}$</b>
             </div>
             <button onClick={onChangePlus}>
-                {!isItemAdded(id)?<img width={20} height={20} src="image/plus.png" alt="plus"></img>:<img width={30} height={30} src="image/check.png" alt="check"></img>}
+                {!isItemAdded(description)?<img width={20} height={20} src="image/plus.png" alt="plus"></img>:<img width={30} height={30} src="image/check.png" alt="check"></img>}
             </button>
         </div>
     </div>
