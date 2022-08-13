@@ -1,6 +1,12 @@
 import React from 'react'
-
+import {useContext} from 'react'
+import AppContext from '../context'
 const Drawer = ({onOpenedCart, cartItems=[], onDeleteItem}) => {
+    
+
+    const totalPrice = cartItems.reduce((sum, item) =>sum + item.price,0)
+    console.log(totalPrice)
+    
     
   return (
     <div className="overlay">
@@ -37,12 +43,12 @@ const Drawer = ({onOpenedCart, cartItems=[], onDeleteItem}) => {
                         <li>
                             <span>Total: </span>
                             <div></div>
-                            <b>5000$</b>
+                            <b>{totalPrice}$</b>
                         </li>
                         <li>
-                            <span>TAX: </span>
+                            <span>TAX 10%: </span>
                             <div></div>
-                            <b>50%</b>
+                            <b>{totalPrice*0.1}$</b>
                         </li>
                     </ul>
                     <button className="greenButton">Checkout</button>

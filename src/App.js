@@ -18,6 +18,8 @@ function App() {
   const [searchValue, setSearchValue] = useState("")
   const [favorites, setFavorites] = useState()
 
+
+
   const onOpenedCart = ()=>{
     setIsOpened(!isOpened)
     
@@ -57,6 +59,7 @@ function App() {
       else{
         const {data} = await axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/cart", obj)
         setCartItems((prev)=>[...prev, obj])
+        
       }
       
     }
@@ -79,6 +82,7 @@ function App() {
       else{
         const response = await axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/favorites", obj)
         setFavorites((prev)=>[...prev, response.data])
+        
       }
     }
     catch(error){
