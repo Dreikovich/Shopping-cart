@@ -1,24 +1,20 @@
 import React from 'react'
-const Favorites = ({favorites}) => {
+import {useState} from "react"
+import Card from '../components/Card'
+const Favorites = ({favorites,onAddToCart,onAddToFavorites}) => {
+    
+
+
+
+    
   return (
     <div className="favorites p-40">
         <h2>Favorites</h2>
         <div className="item d-flex flex-wrap" >
-        {favorites && favorites.map(item =>(
+        {favorites && favorites.map((item,index) =>(
+            <Card key = {index} items={item} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites} favorited={true} {...item}/>
            
-                <div className="card mb-30 ">
             
-                    <img width={156} height={156}src={item.image} alt="t-shirt"></img>
-                    <h5>{item.description}</h5>
-                    <div className="d-flex justify-between align-center">
-                        <div className="cost d-flex flex-column">
-                            <span>Price:</span>
-                            <b>{item.price}$</b>
-                        </div>
-                        
-                    </div>
-                
-           </div>
         
             
         ))}

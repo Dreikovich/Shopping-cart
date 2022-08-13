@@ -4,9 +4,13 @@ import Card from '../components/Card'
 const Home = ({items,
     searchValue,
     onAddToCart,
-    setSearchValue, onAddToFavorites}) => {
+    setSearchValue, onAddToFavorites, cartItems}) => {
+
+   
   return (
+   
     <div className="content p-30">
+         {console.log(cartItems)}
         <div className="d-flex justify-between align-center">
           <h1>{searchValue? `Result of search: ${searchValue}`:"All T-shirts"}</h1>
           <div className="search-block d-flex">
@@ -19,8 +23,10 @@ const Home = ({items,
         </div>
         
         <div className="d-flex flex-wrap">
+            {console.log()}
           {items && items.filter(item=>item.description.toLowerCase().includes(searchValue.toLowerCase())).map((item,index)=>(
-              <Card key={index} items={item} onAddToCart={(obj)=>onAddToCart(obj)} onAddToFavorites={(obj)=>onAddToFavorites(obj)}></Card>
+              <Card key={index} onAddToCart={(obj)=>onAddToCart(obj)} onAddToFavorites={(obj)=>onAddToFavorites(obj)} {...item} 
+              isAdded={cartItems.some((obj)=>Number(obj.parentId)==Number(item.id))}></Card>
           ))}
         </div>
       </div>

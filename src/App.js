@@ -23,36 +23,66 @@ function App() {
     
   }
 
-  const checkItemInCart = (obj)=>{
-    if(cartItems.length===0 ){
+  // const checkItemInCart = (obj)=>{
+  //   if(cartItems.length===0 ){
       
-      return false
-    }
-    else if(cartItems){
-      let isExistInCart = false;
-      cartItems.forEach(item=>{
-        const {description, image, price} = item
-        const object = {description, image, price}
-        // console.log(JSON.stringify(item) === JSON.stringify(obj)) // it is not workin cause of id from asios mock api
-        if(JSON.stringify(object) === JSON.stringify(obj)){
-          isExistInCart = true
-        } 
-      })
-      return isExistInCart;
-    }
-  }
-  const onAddToCart = (obj)=>{
+  //     return false
+  //   }
+  //   else if(cartItems){
+  //     console.log(cartItems)
+  //     console.log(obj)
+  //     let isExistInCart = false;
+  //     cartItems.forEach(item=>{
+  //       const {description, image, price} = item
+  //       const object = {description, image, price}
+  //       // console.log(JSON.stringify(item) === JSON.stringify(obj)) // it is not workin cause of id from asios mock api
+  //       if(JSON.stringify(object) === JSON.stringify(obj)){
+  //         isExistInCart = true
+  //       } 
+  //     })
+  //     return isExistInCart;
+  //   }
+  // }
+
+  const onAddToCart = async(obj)=>{
+    console.log(obj)
+    console.log(cartItems)
     
-    if(!checkItemInCart(obj) ){
-      axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/cart", obj)
-      setCartItems((prev)=>[...prev, obj])
+    try{
+      if(cartItems.find(item=> Number(item.id) === obj.parentId)){
+        setCartItems((prev)=>prev.filter(item=> Number(item.id) !== obj.parentId))
+        await axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/cart/${obj.id}`)
+        
+      }
+      else{
+        const {data} = await axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/cart", obj)
+        setCartItems((prev)=>[...prev, obj])
+      }
+      
     }
+    catch(err){
+
+    }
+      
+    
     // setCartItems((prev)=>[...prev, obj]) 
   }
 
-  const onAddToFavorites = (obj)=>{
-    axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/favorites", obj)
-    setFavorites((prev)=>[...prev, obj])
+  const onAddToFavorites = async(obj)=>{
+    try{
+      if(favorites.find(favObj=>favObj.id === obj.id)){
+        axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/favorites/${obj.id}`)
+        setFavorites((prev)=>prev.filter(item=>item.id !== obj.id))
+      }
+      else{
+        const response = await axios.post("https://62f615b0612c13062b45e6f7.mockapi.io/favorites", obj)
+        setFavorites((prev)=>[...prev, response.data])
+      }
+    }
+    catch(error){
+      alert(`Something went wrong: ${error.message}`)
+    }
+    
   } 
 
   const onDeleteItem = (id)=>{
@@ -71,29 +101,41 @@ function App() {
     // then((json)=>{
     //   setItems(json)
     // })
+    const fetchData = async() =>{
+      const ItemsResponse = await axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/items")
+      const CartItemsResponse = await axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/cart")
+      const FavoritesResponse = await axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/favorites")
+      setCartItems(CartItemsResponse.data)
+      setItems(ItemsResponse.data)
+      setFavorites(FavoritesResponse.data)
+    }
+    fetchData()
 
-    axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/items").then((res)=>{
-      setItems(res.data)
-    })
-    axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/cart").then((res)=>{
-      setCartItems(res.data)
-    })
-    axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/favorites").then(res=>{
-      setFavorites(res.data)
-    })
+    // axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/items").then((res)=>{
+    //   setItems(res.data)
+    // })
+    // axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/cart").then((res)=>{
+    //   setCartItems(res.data)
+    // })
+    // axios.get("https://62f615b0612c13062b45e6f7.mockapi.io/favorites").then(res=>{
+    //   setFavorites(res.data)
+    // })
   },[])
   
   return (
-    <AppContext.Provider>
+    <AppContext.Provider >
       <div className="App">
         {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  onDeleteItem={onDeleteItem}/> :null}
         
         <Header onOpenedCart={onOpenedCart}/>
         <Routes>
-          <Route path="/" element={<Home items={items} searchValue={searchValue} setSearchValue={setSearchValue} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites}/>}>
+          <Route path="/" element={<Home items={items} searchValue={searchValue} setSearchValue={setSearchValue} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites}
+          cartItems={cartItems}/>}>
             
           </Route>
-          <Route path="/favorites" element={<Favorites favorites={favorites}/>}></Route>
+          <Route path="/favorites" element={<Favorites favorites={favorites} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites}
+          
+          />}></Route>
         </Routes>
         
       </div>
