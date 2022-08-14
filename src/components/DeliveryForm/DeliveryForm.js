@@ -1,20 +1,16 @@
 import React from 'react'
 import {useState, useContext, useEffect} from 'react'
 import styles from "../DeliveryForm/DeliveryForm.module.scss"
+import styleItem from "../OrderItems/OrderItems.module.scss"
 import axios from 'axios'
 import AppContext from '../../context'
 import {Link} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 
 const DeliveryForm = () => {
-
-    
-
-    const {cartItems} = useContext(AppContext) 
-    // const [name, setName] = useState("")
-    // const [city, setCity] = useState("")
-    // const [adress, setAdress] = useState("")
-    // const [phone, setPhone] = useState("")
+    let navigate = useNavigate();
+    const {cartItems, setCartItems} = useContext(AppContext) 
     const initialState = {
         name:"",
         city:"",
@@ -29,7 +25,20 @@ const DeliveryForm = () => {
     const [errorAdress, setErrorAdress] = useState(null)
     const {name, city, adress, phone} = formValue;
     const [sendForm, setSendForm] = useState(false)
+
+    const delay = t => new Promise(resolve => setTimeout(resolve, t));
    
+    const deleteAllCart = async()=>{
+        let i = 0, len = cartItems.length;
+        while (i < len) {
+            const id = cartItems[i].id
+            await axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/cart/${id}`)
+            await delay(3000)
+            i++
+        }
+    }
+
+
     useEffect(() => {
         checkData()
     },[formValue])
@@ -68,7 +77,6 @@ const DeliveryForm = () => {
 
     const checkData=()=>{
         if(name && city && adress && phone){
-            
             setSendForm(true)
         }
     }
@@ -79,6 +87,7 @@ const DeliveryForm = () => {
         
         // const {name, city, adress, phone} = formValue;
         const obj = {...formValue, items:cartItems}
+        console.log(obj)
         
         if(!name){
             setErrorName(!null)
@@ -97,18 +106,21 @@ const DeliveryForm = () => {
         if(name && city && adress && phone){
             postData(obj)
             setSendForm(true)
+            deleteAllCart()
+            setCartItems([])
+            navigate('/accept')
     }
 }
     
   return (
-    
-    <form onSubmit={getDataFromInput}>
+    <div>  
+        {cartItems.length>0? <form onSubmit={getDataFromInput}>
         
         <div className={styles.inputs}>
             <div className={styles.input}>
                 <p>Name</p>   
                 {errorName!==null? <input name="name"  placeholder="Field name must not be null" onChange={onNameChange} style={{borderColor: "#FF0000"}}></input>:
-                 <input name="name" placeholder="Enter your name..." onChange={onNameChange}></input>
+                <input name="name" placeholder="Enter your name..." onChange={onNameChange}></input>
                 }
             </div>
             <div className={styles.input}>
@@ -133,23 +145,22 @@ const DeliveryForm = () => {
                 }
                 
             </div>
-                {
-                    console.log(sendForm)
-                }
-            {
-                
-                sendForm===true?
-                <Link to="/accept">
-                    <button className={styles.submit} type="submit">
-                        Submit
-                    </button>
-                </Link>:
                 <button className={styles.submit} type="submit">
                     Submit
                 </button>
-            }   
+            
         </div>
     </form>
+    :
+    <div className={styleItem.orderItems}> 
+        <h2 className="ml-40">Nothing to order</h2> 
+    </div>
+    }
+    
+        
+    </div>
+    
+    
     
   )
 }

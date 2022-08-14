@@ -32,7 +32,7 @@ const OrderItems = () => {
                
             </div>))
         :
-        <h2>You should order something</h2>}
+        <h2 className="ml-40">You should order something</h2>}
     </div>
   )
 }

@@ -91,12 +91,19 @@ function App() {
   } 
 
   const onDeleteItem = (id)=>{
+    try{
       axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/cart/${id}`)
       setCartItems((prev)=>prev.filter(item=>item.id!==id))
+    }
+    catch(error){
+      console.log(error)
+    }
+     
     
   }
 
   const onDeleteFavotiteItem = (id) =>{
+    console.log(id)
     axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/favorites/${id}`)
     setFavorites((prev)=>prev.filter(item=>item.id!==id))
   }
@@ -143,7 +150,7 @@ function App() {
   },[])
   
   return (
-    <AppContext.Provider value={{items,cartItems,favorites, isItemAdded, isItemFavorited, onDeleteItem}}>
+    <AppContext.Provider value={{items,cartItems,favorites, isItemAdded, isItemFavorited, onDeleteItem, setCartItems}}>
       <div className="App" >
         {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  onDeleteItem={onDeleteItem}/> :null}
         
