@@ -5,7 +5,7 @@ import AppContext from '../../context'
 import {useContext} from 'react'
 
 const OrderItems = () => {
-    const {cartItems} = useContext(AppContext)
+    const {cartItems, onDeleteItem} = useContext(AppContext)
     console.log(cartItems)
   return (
     <div className={styles.orderItems}>
@@ -23,7 +23,7 @@ const OrderItems = () => {
                     <span>{item.price}$</span>
                 </div>
                 <div className={styles.content}>
-                    <button>
+                    <button onClick={()=>onDeleteItem(item.id)}>
                         <img width={30} height={30} src="../../../image/check.png"></img>
                     </button>
                 </div>

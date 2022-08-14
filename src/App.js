@@ -3,7 +3,6 @@ import 'macro-css';
 import React from 'react'
 import axios from 'axios'
 import {useState, useEffect} from 'react'
-import Card from './components/Card'
 import Header from './components/Header';
 import Drawer from './components/Drawer'
 import Home from './pages/Home'
@@ -11,6 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import AppContext from "./context"
 import Favorites from './pages/Favorites';
 import Checkout from './pages/Checkout';
+import Thanksful from './pages/Thanksful';
 
 function App() {
   const [isOpened, setIsOpened] = useState(false)
@@ -145,7 +145,7 @@ function App() {
   },[])
   
   return (
-    <AppContext.Provider value={{items,cartItems,favorites, isItemAdded, isItemFavorited}}>
+    <AppContext.Provider value={{items,cartItems,favorites, isItemAdded, isItemFavorited, onDeleteItem}}>
       <div className="App" >
         {isOpened ? <Drawer cartItems = {cartItems} onOpenedCart={onOpenedCart}  onDeleteItem={onDeleteItem}/> :null}
         
@@ -159,6 +159,7 @@ function App() {
           onDeleteFavotiteItem={onDeleteFavotiteItem} items={items}
           />}></Route>
           <Route path="/order" element={<Checkout />}></Route>
+          <Route path="/accept" element={<Thanksful />}></Route>
         </Routes>
         
       </div>

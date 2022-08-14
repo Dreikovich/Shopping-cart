@@ -3,6 +3,7 @@ import {useState, useContext} from 'react'
 import styles from "../DeliveryForm/DeliveryForm.module.scss"
 import axios from 'axios'
 import AppContext from '../../context'
+import {Link} from "react-router-dom"
 
 
 const DeliveryForm = () => {
@@ -49,7 +50,10 @@ const DeliveryForm = () => {
                 <p>Phone</p>   
                 <input placeholder="Enter your phone..." onChange={(e)=>setPhone(e.target.value)}></input>
             </div>
-            <button type="submit">Submit</button>
+            <Link to="/accept">
+                <button className={styles.submit} type="submit">Submit</button>
+            </Link>
+            
         </div>
     </form>
     
