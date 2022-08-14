@@ -48,8 +48,6 @@ function App() {
   // }
 
   const onAddToCart = async(obj)=>{
-    console.log(obj)
-    console.log(cartItems)
     
     try{
       if(cartItems.find(item=> Number(item.id) === obj.parentId)){
