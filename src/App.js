@@ -50,9 +50,10 @@ function App() {
   const onAddToCart = async(obj)=>{
     
     try{
-      if(cartItems.find(item=> Number(item.id) === obj.parentId)){
-        setCartItems((prev)=>prev.filter(item=> Number(item.id) !== obj.parentId))
+      if(cartItems.find(item=> Number(item.id) === Number(obj.parentId))){
+        setCartItems((prev)=>prev.filter(item=> Number(item.id) !== Number(obj.parentId)))
         await axios.delete(`https://62f615b0612c13062b45e6f7.mockapi.io/cart/${obj.id}`)
+        
         
       }
       else{
@@ -115,6 +116,7 @@ function App() {
   const isItemFavorited = (description) =>{
     // console.log(id)
     console.log(favorites)
+    
     // console.log(favorites[0].id)
     return favorites.some((favObj=>favObj.description===description))
   }

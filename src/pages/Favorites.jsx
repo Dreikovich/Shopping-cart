@@ -13,7 +13,7 @@ const Favorites = ({items, onAddToCart,onAddToFavorites, onDeleteFavotiteItem}) 
         <h2>Favorites</h2>
         <div className="item d-flex flex-wrap" >
         {favorites && favorites.map((item,index) =>(
-            <Card key = {index} items={item} onAddToCart={onAddToCart} onAddToFavorites={onAddToFavorites} {...item} onDeleteFavotiteItem={(id)=>onDeleteFavotiteItem(id)}/>
+            <Card key = {index} items={item} onAddToCart={(obj)=>onAddToCart(obj)} onAddToFavorites={onAddToFavorites} {...item} onDeleteFavotiteItem={(id)=>onDeleteFavotiteItem(id)}/>
 
         ))}
         </div>
