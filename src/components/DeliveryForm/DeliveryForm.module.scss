@@ -1,0 +1,43 @@
+.inputs{
+    border: 1px solid #ede7e7;
+    padding:40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius:15px;
+    .input{
+        display:column;
+        p{
+            margin:0;
+            
+        }
+        input{
+            width: 700px;
+            height: 30px;
+            border-radius: 10px;
+            border-color: #ede7e7;
+            font-size:18px;
+            margin-bottom: 20px;
+        }   
+        
+    
+    }
+    button{
+        width:50%;
+        height:40px;
+        background: #9dd558;
+        color: #fff;
+        font-size:16px;
+        transition: background 0.15s easy-in-out;
+        &:hover{
+        filter: brightness(0.9);
+        transform: translateX(-3px)
+        // background:lighten($color:#9dd558, $amount: 5%)
+        }
+        &:active{
+        background:lighten($color:#9dd558, $amount:10%)
+        }
+    }
+
+
+}
