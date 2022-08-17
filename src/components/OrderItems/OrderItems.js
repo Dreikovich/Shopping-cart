@@ -25,6 +25,7 @@ const OrderItems = () => {
                 <div className={styles.content}>
                     <button onClick={()=>onDeleteItem(item.id)}>
                         <img width={30} height={30} src="../../../image/check.png"></img>
+                         {/* <img width={30} height={30} src="image/check.png"></img>  */}
                     </button>
                 </div>
                 

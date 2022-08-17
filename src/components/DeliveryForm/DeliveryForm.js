@@ -108,7 +108,7 @@ const DeliveryForm = () => {
             setSendForm(true)
             deleteAllCart()
             setCartItems([])
-            navigate('/accept')
+            navigate('/Shopping-cart/accept')
     }
 }
     

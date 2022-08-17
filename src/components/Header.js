@@ -10,7 +10,7 @@ const Header = ({onOpenedCart}) => {
     <header className="p-40 ">
       <Link style={{color:"inherit", textDecoration: "none" }}to="/">
       <div className="headerLeft cu-p">
-          <img width={64} height={64} src ="image\icons8-grocery-store-96.png" alt="store"></img>
+          <img width={64} height={64} src ="image/icons8-grocery-store-96.png" alt="store"></img>
           <div className="headerLeftInfo">
             <h3>React T-shirt</h3>
             <p>T-shirt online store</p>
@@ -21,15 +21,15 @@ const Header = ({onOpenedCart}) => {
         
         <ul className="headerRight">
           <li className="cu-p" onClick={()=>console.log("vdffdv")}>
-            <Link to="/favorites">
-              <img  width={20} height={20}src='image/heart-liked.svg' alt='favorite'>
+            <Link to="favorites">
+              <img  width={20} height={20}src='/image/heart-liked.svg' alt='favorite'>
               </img>
             </Link>
             
           </li>
           <li onClick={onOpenedCart} className="cu-p d-flex align-center">
             
-            <img width={20} height={20}src='image/shopping-cart.png' alt='shopping-cart'>
+            <img width={20} height={20}src='/image/shopping-cart.png' alt='shopping-cart'>
             </img>
             <span>{totalPrice}$</span>
           </li>
